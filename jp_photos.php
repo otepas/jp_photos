@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: WP Plugin Template
-Plugin URI: https://github.com/fyaconiello/wp_plugin_template
-Description: A simple wordpress plugin template
+Plugin Name: Jadeprints Photos
+Plugin URI: https://github.com/otepas/jp_photos
+Description: Create photo custom post
 Version: 1.0
-Author: Francis Yaconiello
-Author URI: http://www.yaconiello.com
+Author: Carlos Mateo
+Author URI: http://www.jadeprints.com
 License: GPL2
 */
 /*
-Copyright 2012  Francis Yaconiello  (email : francis@yaconiello.com)
+Copyright 2015  Carlos Mateo
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
@@ -25,9 +25,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if(!class_exists('WP_Plugin_Template'))
+if(!class_exists('JP_Photos'))
 {
-	class WP_Plugin_Template
+	class WP_Photos
 	{
 		/**
 		 * Construct the plugin object
@@ -36,15 +36,15 @@ if(!class_exists('WP_Plugin_Template'))
 		{
 			// Initialize Settings
 			require_once(sprintf("%s/settings.php", dirname(__FILE__)));
-			$WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
+			$jp_photos_settings = new JP_Photos_Settings();
 
 			// Register custom post types
-			require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
-			$Post_Type_Template = new Post_Type_Template();
+			require_once(sprintf("%s/post-types/photo-post.php", dirname(__FILE__)));
+			$photo_post = new Photo_Post_Template();
 
 			$plugin = plugin_basename(__FILE__);
 			add_filter("plugin_action_links_$plugin", array( $this, 'plugin_settings_link' ));
-		} // END public function __construct
+		}
 
 		/**
 		 * Activate the plugin
@@ -52,7 +52,7 @@ if(!class_exists('WP_Plugin_Template'))
 		public static function activate()
 		{
 			// Do nothing
-		} // END public static function activate
+		}
 
 		/**
 		 * Deactivate the plugin
@@ -60,7 +60,7 @@ if(!class_exists('WP_Plugin_Template'))
 		public static function deactivate()
 		{
 			// Do nothing
-		} // END public static function deactivate
+		}
 
 		// Add the settings link to the plugins page
 		function plugin_settings_link($links)
@@ -71,16 +71,16 @@ if(!class_exists('WP_Plugin_Template'))
 		}
 
 
-	} // END class WP_Plugin_Template
-} // END if(!class_exists('WP_Plugin_Template'))
+	}
+} 
 
-if(class_exists('WP_Plugin_Template'))
+if(class_exists('JP_Photos'))
 {
 	// Installation and uninstallation hooks
-	register_activation_hook(__FILE__, array('WP_Plugin_Template', 'activate'));
-	register_deactivation_hook(__FILE__, array('WP_Plugin_Template', 'deactivate'));
+	register_activation_hook(__FILE__, array('JP_Photos', 'activate'));
+	register_deactivation_hook(__FILE__, array('JP_Photos', 'deactivate'));
 
 	// instantiate the plugin class
-	$wp_plugin_template = new WP_Plugin_Template();
+	$jp_photos = new JP_Photos();
 
 }
