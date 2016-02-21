@@ -1,12 +1,12 @@
 <?php
-if(!class_exists('Post_Type_Template'))
+if(!class_exists('Photo_Post'))
 {
 	/**
 	 * A PostTypeTemplate class that provides 3 additional meta fields
 	 */
-	class Post_Type_Template
+	class Photo_Post
 	{
-		const POST_TYPE	= "post-type-template";
+		const POST_TYPE = "photo-post";
 		private $_meta	= array(
 			'meta_a',
 			'meta_b',
@@ -21,7 +21,7 @@ if(!class_exists('Post_Type_Template'))
     		// register actions
     		add_action('init', array(&$this, 'init'));
     		add_action('admin_init', array(&$this, 'admin_init'));
-    	} // END public function __construct()
+    	}
 
     	/**
     	 * hook into WP's init action hook
@@ -31,7 +31,7 @@ if(!class_exists('Post_Type_Template'))
     		// Initialize Post Type
     		$this->create_post_type();
     		add_action('save_post', array(&$this, 'save_post'));
-    	} // END public function init()
+    	}
 
     	/**
     	 * Create the post type
@@ -46,7 +46,7 @@ if(!class_exists('Post_Type_Template'))
     				),
     				'public' => true,
     				'has_archive' => true,
-    				'description' => __("This is a sample post type meant only to illustrate a preferred structure of plugin development"),
+    				'description' => __("Photos"),
     				'supports' => array(
     					'title', 'editor', 'excerpt', 
     				),
@@ -77,8 +77,8 @@ if(!class_exists('Post_Type_Template'))
     		else
     		{
     			return;
-    		} // if($_POST['post_type'] == self::POST_TYPE && current_user_can('edit_post', $post_id))
-    	} // END public function save_post($post_id)
+    		} 
+    	} 
 
     	/**
     	 * hook into WP's admin_init action hook
@@ -87,7 +87,7 @@ if(!class_exists('Post_Type_Template'))
     	{			
     		// Add metaboxes
     		add_action('add_meta_boxes', array(&$this, 'add_meta_boxes'));
-    	} // END public function admin_init()
+    	} 
 			
     	/**
     	 * hook into WP's add_meta_boxes action hook
@@ -101,16 +101,16 @@ if(!class_exists('Post_Type_Template'))
     			array(&$this, 'add_inner_meta_boxes'),
     			self::POST_TYPE
     	    );					
-    	} // END public function add_meta_boxes()
+    	} 
 
-		/**
-		 * called off of the add meta box
-		 */		
-		public function add_inner_meta_boxes($post)
-		{		
-			// Render the job order metabox
-			include(sprintf("%s/../templates/%s_metabox.php", dirname(__FILE__), self::POST_TYPE));			
-		} // END public function add_inner_meta_boxes($post)
+	/**
+	 * called off of the add meta box
+	 */		
+	public function add_inner_meta_boxes($post)
+	{		
+		// Render the job order metabox
+		include(sprintf("%s/../templates/%s_metabox.php", dirname(__FILE__), self::POST_TYPE));			
+	}
 
-	} // END class Post_Type_Template
-} // END if(!class_exists('Post_Type_Template'))
+	} 
+} 
